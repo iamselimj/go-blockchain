@@ -3,12 +3,12 @@ package main
 import (
 	"time"
 
-	network "github.com/iamselimj/go-blockchain/network"
+	net "github.com/iamselimj/go-blockchain/net"
 )
 
 func main() {
-	lt := network.NewLocalTransport("LOCAL")
-	rt := network.NewLocalTransport("REMOTE")
+	lt := net.NewLocalTransport("LOCAL")
+	rt := net.NewLocalTransport("REMOTE")
 
 	lt.Connect(rt)
 	rt.Connect(lt)
@@ -20,9 +20,9 @@ func main() {
 		}
 	}()
 
-	opts := network.ServerOpts{
-		Transports: []network.Transport{lt, rt},
+	opts := net.ServerOpts{
+		Transports: []net.Transport{lt, rt},
 	}
-	s := network.NewServer(opts)
+	s := net.NewServer(opts)
 	s.Start()
 }

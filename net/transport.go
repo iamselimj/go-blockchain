@@ -1,4 +1,4 @@
-package network
+package net
 
 type Transport interface {
 	Connect(peer Transport) error
