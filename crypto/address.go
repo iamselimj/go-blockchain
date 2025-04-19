@@ -1,28 +1,27 @@
 package crypto
 
-import "encoding/hex"
+import (
+	"encoding/hex"
+	"fmt"
+)
 
 type Address [20]uint8
 
-func AddressFromBytes(b []byte) Address {
+func AddressFromBytes(b []byte) (Address, error) {
 	if len(b) != 20 {
-		panic("Address must be 20 bytes")
+		return Address{}, fmt.Errorf("Address must be 20 bytes, got %d", len(b))
 	}
 	var a Address
-	for i := range b {
-		a[i] = b[i]
-	}
-	return Address(a)
+	copy(a[:], b)
+	return a, nil
 }
 
 func (a Address) String() string {
-	return (hex.EncodeToString(a.Bytes()))
+	return hex.EncodeToString(a.Bytes())
 }
 
 func (a Address) Bytes() []byte {
 	b := make([]byte, 20)
-	for i := range 20 {
-		b[i] = a[i]
-	}
-	return (b)
+	copy(b, a[:]) // Utilisation de copy pour une meilleure performance
+	return b
 }

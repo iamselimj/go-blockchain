@@ -52,16 +52,16 @@ func (b *Block) Hash(hasher Hasher[*Block]) Hash {
 }
 
 func (b *Block) Encode(w io.Writer, enc Encoder[*Block]) error {
-	return (enc.Encode(w, b))
+	return enc.Encode(w, b)
 }
 
 func (b *Block) Decode(r io.Reader, dec Decoder[*Block]) error {
-	return (dec.Decode(r, b))
+	return dec.Decode(r, b)
 }
 
 func (b *Block) HeaderData() []byte {
 	buf := &bytes.Buffer{}
 	enc := gob.NewEncoder(buf)
 	enc.Encode(b.Header)
-	return (buf.Bytes())
+	return buf.Bytes()
 }

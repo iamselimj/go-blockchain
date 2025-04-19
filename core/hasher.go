@@ -4,7 +4,6 @@ import (
 	"crypto/sha256"
 )
 
-// HASHER
 type Hasher[T any] interface {
 	Hash(T) Hash
 }

@@ -1,7 +1,7 @@
 package net
 
 import (
-	"fmt"
+	"log"
 )
 
 type ServerOpts struct {
@@ -26,24 +26,31 @@ func NewServer(opts ServerOpts) *Server {
 func (s *Server) Start() {
 	s.initTransports()
 
-free:
 	for {
 		select {
 		case rpc := <-s.rpcCh:
-			fmt.Printf("%+v\n", rpc)
+			log.Printf("Received RPC: %+v\n", rpc)
 		case <-s.quitCh:
-			break free
-		default:
-			continue
+			log.Println("Server shutting down...")
+			return
 		}
 	}
+}
+
+func (s *Server) Stop() {
+	close(s.quitCh)
 }
 
 func (s *Server) initTransports() {
 	for _, tr := range s.Transports {
 		go func(tr Transport) {
-			for rpc := range tr.Consume() {
-				s.rpcCh <- rpc
+			for {
+				select {
+				case rpc := <-tr.Consume():
+					s.rpcCh <- rpc
+				case <-s.quitCh:
+					return
+				}
 			}
 		}(tr)
 	}

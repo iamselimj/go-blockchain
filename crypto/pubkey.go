@@ -14,7 +14,7 @@ func (pk *PublicKey) Bytes() []byte {
 	return (elliptic.MarshalCompressed(pk.key, pk.key.X, pk.key.Y))
 }
 
-func (pk *PublicKey) Address() Address {
+func (pk *PublicKey) Address() (Address, error) {
 	h := sha256.Sum256(pk.Bytes())
-	return (AddressFromBytes(h[len(h)-20:]))
+	return AddressFromBytes(h[len(h)-20:])
 }

@@ -6,7 +6,7 @@ type Storage interface {
 
 type MemoryStorage struct{}
 
-func NewMeroryStorage() *MemoryStorage {
+func NewMemoryStorage() *MemoryStorage {
 	return &MemoryStorage{}
 }
 

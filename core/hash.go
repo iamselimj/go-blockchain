@@ -7,28 +7,25 @@ import (
 	"io"
 )
 
-// HASH
 type Hash [32]uint8
 
 func (h Hash) IsZero() bool {
 	for _, b := range h {
 		if b != 0 {
-			return (false)
+			return false
 		}
 	}
-	return (true)
+	return true
 }
 
 func (h Hash) Bytes() []byte {
 	b := make([]byte, 32)
-	for i := range 32 {
-		b[i] = h[i]
-	}
-	return (b)
+	copy(b, h[:])
+	return b
 }
 
 func (h Hash) String() string {
-	return (hex.EncodeToString(h.Bytes()))
+	return hex.EncodeToString(h.Bytes())
 }
 
 func HashFromBytes(b []byte) Hash {
@@ -37,7 +34,7 @@ func HashFromBytes(b []byte) Hash {
 	}
 	var value [32]uint8
 	copy(value[:], b[:32])
-	return (Hash(value))
+	return Hash(value)
 }
 
 func RandomBytes(size int) []byte {
@@ -45,9 +42,9 @@ func RandomBytes(size int) []byte {
 	if _, err := io.ReadFull(rand.Reader, token); err != nil {
 		panic(fmt.Sprintf("RandomBytes: failed to read random bytes: %v", err))
 	}
-	return (token)
+	return token
 }
 
 func RandomHash() Hash {
-	return (HashFromBytes(RandomBytes(32)))
+	return HashFromBytes(RandomBytes(32))
 }

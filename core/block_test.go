@@ -17,7 +17,7 @@ func randomBlock(height uint32) *Block {
 	tx := Transaction{
 		Data: []byte("test"),
 	}
-	return (NewBlock(h, []Transaction{tx}))
+	return NewBlock(h, []Transaction{tx})
 }
 
 func TestHashBlock(t *testing.T) {

@@ -31,7 +31,7 @@ func (h *Header) EncodeBinary(w io.Writer) error {
 	if err := binary.Write(w, binary.LittleEndian, &h.Nonce); err != nil {
 		return (fmt.Errorf("Failed to encode nonce: %w", err))
 	}
-	return (nil)
+	return nil
 }
 
 func (h *Header) DecodeBinary(r io.Reader) error {
@@ -50,5 +50,5 @@ func (h *Header) DecodeBinary(r io.Reader) error {
 	if err := binary.Read(r, binary.LittleEndian, &h.Nonce); err != nil {
 		return (fmt.Errorf("Failed to decode nonce: %w", err))
 	}
-	return (nil)
+	return nil
 }

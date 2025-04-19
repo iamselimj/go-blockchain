@@ -33,5 +33,5 @@ func (pk *PrivateKey) Sign(data []byte) (*Signature, error) {
 }
 
 func (pk *PrivateKey) Bytes() []byte {
-	return append(pk.key.D.Bytes(), pk.key.PublicKey.X.Bytes()...)
+	return (append(pk.key.D.Bytes(), pk.key.PublicKey.X.Bytes()...))
 }
